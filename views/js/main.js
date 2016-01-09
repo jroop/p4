@@ -483,6 +483,7 @@ console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "
 // Iterator for number of times the pizzas in the background have scrolled.
 // Used by updatePositions() to decide when to log the average time per frame
 var frame = 0;
+var items; //made items a global so that it is only set once on window.onload
 
 // Logs the average amount of time per 10 frames needed to move the sliding background pizzas on scroll.
 function logAverageFrame(times) {   // times is the array of User Timing measurements from updatePositions()
@@ -502,7 +503,6 @@ function updatePositions() {
   var scroll = document.body.scrollTop; //moved outside of loop to speed up calc
   frame++;
   window.performance.mark("mark_start_frame");
-
 
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((scroll / 1250) + (i % 5));
@@ -536,10 +536,8 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
-  updatePositions();
+  //updatePositions(); //do not need to call as positions are already set from above.
 });
-
-var items; //made items a global so that it is only set once on window.onload
 
 //added for setup of global vars once page finishes loading
 window.onload = function(){
